@@ -1,9 +1,11 @@
 /******************************************************************************
-bubble sort / insertion sort / heap sort / Merge sort / radix sort
+bubble sort / insertion sort / heap sort / merge sort / radix sort
 *******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
+// Commom methods
 
 int* criarVetor(int i) {
     int* v = malloc(sizeof(int) * i);
@@ -28,6 +30,8 @@ void swap(int v[], int i, int j, int* cont) {
     v[j] = aux;
 }
 
+//BubbleSort
+
 int bubblesort(int v[], int n) {
     int cont = 0;
     for(int i = 0; i < n; i++) {
@@ -40,6 +44,8 @@ int bubblesort(int v[], int n) {
     }
     return cont;
 }
+
+//InsertionSort
 
 int insertionsort(int v[], int n) {
     int cont = 0;
@@ -58,6 +64,8 @@ int insertionsort(int v[], int n) {
     }
     return cont;
 }
+
+//Heapsort
 
 void heapify(int v[], int n, int i, int* cont) {
     int raiz = i;
@@ -90,6 +98,8 @@ int heapsort(int v[], int n) {
     }
   return cont;
 }
+
+//MergeSort
 
 void merge(int v[], int inicio, int meio, int fim, int* cont) {
  int aux[fim - inicio + 1];
@@ -134,6 +144,8 @@ int mergesort(int v[], int n) {
     return cont;
 }
 
+//Quicksort
+
 int partition(int v[], int inicio, int fim, int *cont) {
     int pivo = v[fim];
     int i = (inicio - 1);
@@ -141,12 +153,10 @@ int partition(int v[], int inicio, int fim, int *cont) {
     for (int j = inicio; j <= fim - 1; j++) {
         (*cont)++;
         if (v[j] < pivo) {
-            (*cont)++;
             i++;
             swap(v, i, j, cont);
         }
     }
-    (*cont)++;
     swap(v, i + 1, fim, cont);
     return i + 1;
 }
@@ -165,6 +175,8 @@ int quicksort(int v[], int n) {
     _quicksort(v, 0, n - 1, &cont);
     return cont;
 }
+
+//RadixSort
 
 int max(int v[], int n, int* cont) {
     int max = v[0];
@@ -187,7 +199,6 @@ void countingsort(int v[], int n, int expo, int* cont) {
     }
     for (int i = n - 1; i >= 0; i--) {
         saida[frequencia[(v[i] / expo) % 10] - 1] = v[i];
-        // saida[(v[i] / expo) % 10]--;
         frequencia[(v[i] / expo) % 10]--;
     }
     for (int i = 0; i < n; i++) {
@@ -208,37 +219,37 @@ int radixsort(int v[], int n) {
 int main() {
     srand(time(NULL));
 
-    FILE *arquivo = fopen("saida.txt", "w");
-    int QtdOp;
-    fprintf(arquivo, "tamanho vetor, Qtd Operacoes, metodo, \n");
+    FILE *arquivo = fopen("Result.txt", "w");
+    int qtdOp;
+    fprintf(arquivo, "Array Size, Qty operations, method\n");
 
-    for(int j = 0; j < 1; j++) {
-        for(int i = 0; i <= 10; i++) {
+    for(int j = 0; j < 30; j++) {
+        for(int i = 0; i <= 1000; i++) {
             int* v = criarVetor(i);
 
             int* vetorBubblesort = copiaVetor(v, i);
-            QtdOp = bubblesort(vetorBubblesort, i);
-            fprintf(arquivo, "%d,%d,Bubblesort,\n", i, QtdOp);
+            qtdOp = bubblesort(vetorBubblesort, i);
+            fprintf(arquivo, "%d,%d,Bubblesort\n", i, qtdOp);
 
             int* vetorInsertionsort = copiaVetor(v, i);
-            QtdOp = insertionsort(vetorInsertionsort, i);
-            fprintf(arquivo, "%d,%d,Insertionsort,\n", i, QtdOp);
+            qtdOp = insertionsort(vetorInsertionsort, i);
+            fprintf(arquivo, "%d,%d,Insertionsort\n", i, qtdOp);
 
             int* vetorHeapsort = copiaVetor(v, i);
-            QtdOp = heapsort(vetorHeapsort, i);
-            fprintf(arquivo, "%d,%d,Heapsort,\n", i, QtdOp);
+            qtdOp = heapsort(vetorHeapsort, i);
+            fprintf(arquivo, "%d,%d,Heapsort\n", i, qtdOp);
 
             int* vetorMergesort = copiaVetor(v, i);
-            QtdOp = mergesort(vetorMergesort, i);
-            fprintf(arquivo, "%d,%d,Mergesort,\n", i, QtdOp);
+            qtdOp = mergesort(vetorMergesort, i);
+            fprintf(arquivo, "%d,%d,Mergesort\n", i, qtdOp);
 
             int* vetorQuicksort = copiaVetor(v, i);
-            QtdOp = quicksort(vetorQuicksort, i);
-            fprintf(arquivo, "%d,%d,Quicksort,\n", i, QtdOp);
+            qtdOp = quicksort(vetorQuicksort, i);
+            fprintf(arquivo, "%d,%d,Quicksort\n", i, qtdOp);
 
             int* vetorRadixsort = copiaVetor(v, i);
-            QtdOp = radixsort(vetorRadixsort, i);
-            fprintf(arquivo, "%d,%d,Radixsort,\n", i, QtdOp);
+            qtdOp = radixsort(vetorRadixsort, i);
+            fprintf(arquivo, "%d,%d,Radixsort\n", i, qtdOp);
 
             free(v);
             free(vetorBubblesort);
@@ -250,6 +261,5 @@ int main() {
         }
     }
     fclose(arquivo);
-
     return 0;
 }
