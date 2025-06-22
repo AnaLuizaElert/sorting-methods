@@ -224,7 +224,7 @@ int main() {
     fprintf(arquivo, "Array Size, Qty operations, method\n");
 
     for(int j = 0; j < 30; j++) {
-        for(int i = 0; i <= 1000; i++) {
+        for(int i = 1; i <= 1000; i++) {
             int* v = criarVetor(i);
 
             int* vetorBubblesort = copiaVetor(v, i);
